@@ -17,34 +17,41 @@
 </head>
 <body>
     <!-- Title -->
-    <section id="title">
+    <section id="title" style="background-color: #F4F1E8;">
         <div class="px-4 py-5 my-5 text-center"> <img class="d-block mx-auto mb-4" src="./images/zm-logo.png"
                 alt="Zune Moe Logo" width="71" height="78">
-            <h1 class="display-5 fw-bold text-body-emphasis">Hello, I am Zune!</h1>
+            <h1 class="display-5 fw-bold text-body-emphasis">
+                <span class="radley-regular-italic">Hello,</span>
+                <span class="color-tertiary">I am Zune!</span>
+            </h1>
             <div class="col-lg-6 mx-auto">
                 <p class="lead mb-4">I believe brevity is key. My print and digital designs are all about minimalism and
                     elegance.</p>
                 <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-                    <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Hire Me</button>
+                    <button type="button" id="btn" class="btn btn-primary btn-lg px-4 gap-3">Hire Me</button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About Me & Skills -->
-    <section id="about">
+    <!-- About Me -->
+    <section id="about" style="background-color: #F4F1E8;">
         <div class="container marketing">
             <div class="row justify-content-center text-center">
                 <div class="col-lg-12 d-flex flex-column align-items-center"> 
                     <img src="./images/my-notion-face-portrait.png" alt="Zune Moe" class="rounded-circle mb-3" width="140" height="140">        
-                    <h2 class="fw-normal">About Zune Moe</h2>
+                    <h2 class="fw-normal color-tertiary">About Zune Moe</h2>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
                 </div><!-- /.col-lg-12 -->
             </div>
-            <!-- /.row --> 
+            <!-- /.row -->             
+            <hr class="featurette-divider"> <!-- /END THE FEATURETTES -->
+        </div>
+    </section>
 
-            <!-- START THE FEATURETTES -->
-            <hr class="featurette-divider">
+    <!-- Skills -->
+    <section id="skills" class="color-primary" style="background-color: #314028;">
+        <div class="container marketing">
             <div class="row featurette">
                 <div class="col-md-7">
                     <h2 class="featurette-heading fw-normal lh-1">Project Management</h2>
@@ -84,7 +91,7 @@
                 <p class="col-lg-8 mx-auto lead">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>    
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Contact Me</button>    
+                <button type="button" id="btn" class="btn btn-primary btn-lg px-4 gap-3">Contact Me</button>    
             </div>
         </div>
     </section>

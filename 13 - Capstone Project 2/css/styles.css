@@ -1,0 +1,68 @@
+.radley-regular {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.radley-regular-italic {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.carlito-regular {
+    font-family: "Carlito", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.carlito-bold {
+    font-family: "Carlito", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.carlito-regular-italic {
+    font-family: "Carlito", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.carlito-bold-italic {
+    font-family: "Carlito", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.color-primary {
+    color: #F4F1E8;
+}
+
+.color-secondary {
+    color: #314028;
+}
+
+.color-tertiary {
+    color: #9B4819;
+}
+
+#btn {
+    --bs-btn-bg: #9B4819; 
+    --bs-btn-border-color: #9B4819;
+    --bs-btn-hover-bg: #314028;
+    --bs-btn-hover-border-color: #314028;
+    --bs-btn-active-bg: #314028ed;
+    --bs-btn-active-border-color: #314028ed;
+}
+
+h1, h2 {
+    font-family: "Radley", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+p {
+    font-family: "Carlito", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}

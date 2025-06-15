@@ -11,7 +11,7 @@ const port = 3000;
 
 //Step 4 - Add a dynamic year to the footer.
 //Hint: Google to find out how to get the current year using JS.
-
+app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
@@ -20,13 +20,6 @@ app.get("/", (req, res) => {
 });
 
 app.post("/submit", (req, res) => {
-  let randomAdj = adj[Math.floor(Math.random() * adj.length)];
-  let randomNoun = noun[Math.floor(Math.random() * noun.length)];
-  console.log(randomAdj, randomNoun);
-
-  res.render("index.ejs", {
-    randomBandName: `${randomAdj} ${randomNoun}`,
-  });
   //Step 2 - Make the generate name functionality work
   //Hint: When the "Generate Name" button in index.ejs is clicked, it should hit up this route.
   //Then:
@@ -35,6 +28,13 @@ app.post("/submit", (req, res) => {
   //2. Send the index.ejs as a response and add the adjective and noun to the res.render
   //3. Test to make sure that the random words display in the h1 element in index.ejs
 
+  let randomAdj = adj[Math.floor(Math.random() * adj.length)];
+  let randomNoun = noun[Math.floor(Math.random() * noun.length)];
+  console.log(randomAdj, randomNoun);
+
+  res.render("index.ejs", {
+    randomBandName: `${randomAdj} ${randomNoun}`,
+  });
 });
 
 app.listen(port, () => {

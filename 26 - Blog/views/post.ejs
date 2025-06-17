@@ -1,0 +1,9 @@
+<%- include("layout.ejs") %>
+
+<% if (locals.post) { %>
+    <h1><%= post.title %></h1>
+    <p><em><%= post.date %></em></p>
+    <p><%- post.content.replace(/\n/g, '<br>') %></p>
+<% } %>
+
+<%- include("partials/footer.ejs") %>

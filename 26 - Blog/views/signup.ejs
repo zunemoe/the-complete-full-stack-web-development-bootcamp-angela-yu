@@ -1,0 +1,57 @@
+<%- include("layout.ejs") %>
+
+    <main class="form-signin w-50 m-auto">
+        <form action="/signup" method="POST"> <img class="mb-4" src="/images/bootstrap-logo.svg" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+            <% if (locals.error) { %>
+            <div class="alert alert-danger" role="alert">
+                <%= error %>
+            </div>
+            <% } %>
+
+            <div id="clientError" class="alert alert-danger" role="alert" style="display: none;">
+            </div>
+
+            <div class="form-floating"> <input type="text" name="name" class="form-control" id="floatingInput"
+                    placeholder="Full Name"> <label for="floatingInput">Full Name</label> </div>
+            <div class="form-floating"> <input type="email" name="email" class="form-control" id="floatingInput"
+                    placeholder="name@example.com"> <label for="floatingInput">Email address</label> </div>
+            <div class="form-floating"> <input type="password" name="password" class="form-control" id="floatingPassword"
+                    placeholder="Password"> <label for="floatingPassword">Password</label> </div>
+            <button class="btn btn-primary w-100 py-2" type="submit">Sign up</button>            
+        </form>
+    </main>
+
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            const name = document.querySelector('input[name="name"]').value.trim();
+            const email = document.querySelector('input[name="email"]').value.trim();
+            const password = document.querySelector('input[name="password"]').value.trim();
+            
+            let errorMessage = "";
+
+            if (!name || !email || !password) {
+                errorMessage += "All fields are required. \n";
+            }
+
+            if (password.length < 8) {
+                errorMessage += "Password must be at least 8 characters long. \n";
+            }
+
+            const errorDiv = document.getElementById('clientError');
+            if (errorMessage) {
+                event.preventDefault(); // Prevent form submission
+                errorDiv.innerHTML = errorMessage;
+                errorDiv.style.display = 'block'; // Show the error message
+            } else {
+                errorDiv.style.display = 'none'; // Hide the error message
+            }
+        });
+    </script>
+
+    <script src="/docs/5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        class="astro-vvvwv3sm"></script>
+
+
+<%- include("partials/footer.ejs") %>

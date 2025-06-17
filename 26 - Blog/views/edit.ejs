@@ -1,0 +1,21 @@
+<%- include("layout.ejs") %>
+
+<div class="container">
+    <h1 class="mb-4">Edit Post</h1>
+    <% if (locals.post) { %>
+        <form action="/edit/<%= post.id %>" method="POST">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title" name="title" value="<%= post.title %>" required>
+            </div>
+            <div class="mb-3">
+                <label for="content" class="form-label">Content</label>
+                <textarea class="form-control" id="content" name="content" rows="15" required><%= post.content %></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Post</button>
+        </form>
+    <% } %>
+    
+</div>
+
+<%- include("partials/footer.ejs") %>

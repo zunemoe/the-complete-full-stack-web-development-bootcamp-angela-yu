@@ -168,7 +168,7 @@ app.get("/about", (req, res) => {
     console.log("Rendering about page");
     res.render('about.ejs');
 });
-
+Whereas
 app.post("/register", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;

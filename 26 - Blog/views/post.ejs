@@ -1,7 +1,7 @@
 <%- include("layout.ejs") %>
 
 <% if (locals.post) { %>
-    <h1><%= post.title %></h1>
+    <h1 class="mt-3"><%= post.title %></h1>
     <p><em><%= post.date %></em></p>
     <p><%- post.content.replace(/\n/g, '<br>') %></p>
 <% } %>

@@ -25,21 +25,14 @@
 
     <h3>Ingredients:</h3>
     <ul id="ingredientsList">
-      <% if (!locals.recipe) { %>
-        <li>Protein name, protein preparation</li>
-        <li>Salsa name</li>
-        <li>Every other topping</li>
-      <% } else { %>
-        <li> <%= recipe.ingredients.protein.name %> <%= recipe.ingredients.protein.preparation %> </li>
+      <% if (locals.recipe) { %>
+        <li> <%= recipe.ingredients.protein.name %>, <%= recipe.ingredients.protein.preparation %> </li>
         <li> <%= recipe.ingredients.salsa.name %> </li>
-        <% for (let topping of recipe.ingredients.toppings) { %>
-          <li> <%= topping %> </li>
-        <% } %>
+        <% recipe.ingredients.toppings.forEach(function(topping) { %>          
+          <li> <%= topping.quantity %> of <%= topping.name %> </li>
+        <% }) %>
       <% } %>
-      
     </ul>
-
-
 
   </div>
 </body>

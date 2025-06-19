@@ -19,15 +19,21 @@
     </header>
 </div> -->
 
-<header class="sticky-top" style="background-color: white;">
-    <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 border-bottom">
-        <div class="col-md-3 mb-2 mb-md-0"> <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-            <img src="/images/my-notion-face-portrait.png" class="bi" alt="Zune Moe" class="rounded-circle" width="40" height="40" role="img" />
-            </a> </div>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="/about" class="nav-link px-2">About</a></li>
-        </ul>
+<header class="site-header sticky-top">
+    <div class="container d-flex flex-wrap align-items-center justify-content-between py-3">
+        <div class="site-branding">
+            <a href="/" class="d-flex align-items-center text-decoration-none">
+                <img src="/images/my-notion-face-portrait.png" class="site-logo" alt="Zune Moe" width="40" height="40" />
+                <h1 class="site-title d-none d-sm-block">My Blog</h1>
+            </a>
+        </div>
+        
+        <nav class="main-navigation" aria-label="Main Navigation">
+            <ul>
+                <li><a href="/" class="<%= (typeof currentPage !== 'undefined' && currentPage === 'home') ? 'active' : '' %>">Home</a></li>
+                <li><a href="/about" class="<%= (typeof currentPage !== 'undefined' && currentPage === 'about') ? 'active' : '' %>">About</a></li>
+            </ul>
+        </nav>
         <div class="col-md-3 text-end">
             <% if (typeof user !=='undefined' && user) { %>
                 <div>Welcome, <%= user.name %>! <a href="/logout"> Logout</a></div>

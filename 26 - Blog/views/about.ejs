@@ -1,12 +1,52 @@
 <%- include("layout.ejs") %>
 
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-6 text-center">
-      <img src="/images/my-notion-face-portrait.png" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px;">
-      <p class="mt-3">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<div class="page-header mb-5">
+    <h1 class="page-title">About Me</h1>
+    <p class="page-description">Learn more about the person behind this blog</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="text-center">
+            <img src="/images/my-notion-face-portrait.png" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 200px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+            <h2>Zune Moe</h2>
+            <p class="text-muted">Web Developer & Tech Enthusiast</p>
+            
+            <div class="d-flex justify-content-center gap-3 mt-4">
+                <a href="#" class="social-icon" aria-label="Twitter">
+                    <i class="bi bi-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="GitHub">
+                    <i class="bi bi-github"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
+    
+    <div class="col-md-8">
+        <div class="full-post">
+            <h3>Hello there!</h3>
+            <p>Welcome to my blog. I'm Zune Moe, a passionate web developer and technology enthusiast. I created this blog to share my journey, insights, and experiences in the tech world.</p>
+            
+            <h3>My Journey</h3>
+            <p>I started my coding journey in college when I took my first programming class. Since then, I've been fascinated by how software can solve real-world problems and make life easier. After graduating, I worked on various projects that helped me sharpen my skills in web development.</p>
+            
+            <h3>What I Do</h3>
+            <p>Currently, I focus on full-stack development using modern technologies like React, Node.js, and databases like MongoDB. I'm also exploring the world of cloud computing and serverless architectures.</p>
+            
+            <h3>This Blog</h3>
+            <p>On this blog, I share tutorials, project walkthroughs, and thoughts about the latest trends in technology. I believe in learning by doing and hope that my content helps others on their coding journey.</p>
+            
+            <h3>Beyond Coding</h3>
+            <p>When I'm not coding, you can find me hiking, reading science fiction novels, or experimenting with new cooking recipes. I believe in maintaining a balanced lifestyle that nurtures both mind and body.</p>
+            
+            <h3>Let's Connect</h3>
+            <p>I love connecting with fellow developers and tech enthusiasts. Feel free to reach out through social media or drop me an email if you have questions or just want to chat!</p>
+        </div>
+    </div>
 </div>
 
 <%- include("partials/footer.ejs") %>

@@ -1,0 +1,91 @@
+/* Header and Navigation Styling */
+.site-header {
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.site-branding {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.site-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.site-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  color: #212529;
+}
+
+.main-navigation ul {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.main-navigation a {
+  font-weight: 500;
+  color: #495057;
+  text-decoration: none;
+  padding: 0.5rem 0;
+  position: relative;
+}
+
+.main-navigation a:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #0d6efd;
+  transition: width 0.3s ease;
+}
+
+.main-navigation a:hover {
+  color: #0d6efd;
+}
+
+.main-navigation a:hover:after,
+.main-navigation a.active:after {
+  width: 100%;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.user-welcome {
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Mobile navigation */
+@media (max-width: 768px) {
+  .main-navigation {
+    width: 100%;
+    order: 3;
+  }
+  
+  .main-navigation ul {
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+  
+  .user-actions {
+    justify-content: flex-end;
+  }
+}

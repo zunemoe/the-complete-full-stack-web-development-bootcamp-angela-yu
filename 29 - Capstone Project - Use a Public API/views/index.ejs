@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Joke Generator</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+<body>
+    <!-- Div Container -->
+    <!-- Form -->
+    <!-- Categories -->
+    <!-- Blacklist Flags -->
+    <!-- Joke Types -->
+    <!-- Generate Joke Button -->
+    <!-- Display Joke -->
+    <div class="container">
+        <h1>Get A Random Joke 🤣</h1>
+        <form method="get" action="/">
+            <fieldset>
+                <legend>Select Categories:</legend>
+                <% if (locals.categories) { %>
+                    <% categories.forEach(category=> { %>
+                        <label>
+                            <input type="checkbox" name="categories" value="<%= category %>">
+                            <%= category %>
+                        </label><br>
+                        <% }) %>
+                            <% } %>                
+            </fieldset>
+
+            <fieldset>
+                <legend>Blacklist Flags:</legend>
+                <% if (locals.flags) { %>
+                    <% flags.forEach(flag=> { %>
+                        <label>
+                            <input type="checkbox" name="flags" value="<%= flag %>">
+                            <%= flag %>
+                        </label><br>
+                        <% }) %>
+                            <% } %>               
+            </fieldset>
+
+            <fieldset>
+                <legend>Joke Type:</legend>
+                <% if (locals.selected) { %>
+                    <label><input type="radio" name="type" value="any" <%=(!selected.type || selected.type==="any" ) ? "checked" : ""
+                            %>> Any</label>
+                    <label><input type="radio" name="type" value="single" <%=(selected.type==="single" ) ? "checked" : "" %>>
+                        Single</label>
+                    <label><input type="radio" name="type" value="twopart" <%=(selected.type==="twopart" ) ? "checked" : "" %>>
+                        Two-Part</label>
+                    <% } %>                                
+            </fieldset>
+
+            <button type="submit">Get a Joke</button>
+        </form>
+        <div class="joke-box">
+            <% if (locals.joke) { %>
+                <p><%- joke %></p>
+                <% } %>
+        </div>
+    </div>
+</body>
+</html>

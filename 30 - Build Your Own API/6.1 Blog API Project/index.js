@@ -40,16 +40,62 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 //Write your code here//
 
-//CHALLENGE 1: GET All posts
+//CHALLENGE 1: GET All posts -> url/posts
+app.get("/posts", (req, res) => {
+  res.json(posts);
+});
+//CHALLENGE 2: GET a specific post by id -> url/edit/:id
+app.get("/posts/:id", (req, res) => {
+  const postID = parseInt(req.params.id, 10);
+  const post = posts.find((p) => p.id === postID);
+  if (post) {
+    res.json(post);
+  } else {
+    res.status(404).json({ message: "Post not found" });
+  }
+});
+//CHALLENGE 3: POST a new post -> url/api/posts (req.body should contain title, content, author, date)
+app.post("/posts", (req, res) => {
+  const {title, content, author} = req.body;
+  const date = new Date().toISOString();
+  const newPost = {
+    id: ++lastId,
+    title,
+    content,
+    author,
+    date,
+  }
+  posts.push(newPost);
+  res.status(201).json(newPost);
+});
+//CHALLENGE 4: PATCH a post when you just want to update one parameter -> url/posts/:id (req.body should contain the parameter you want to update, e.g., { title: "New Title" })
+app.patch("/posts/:id", (req, res) => {
+  const postID = parseInt(req.params.id, 10);
+  const post = posts.find((p) => p.id === postID);
+  if (post) {
+    const { title, content, author, date } = req.body;
+    if (title) post.title = title;
+    if (content) post.content = content;
+    if (author) post.author = author;
+    if (date) post.date = date;
 
-//CHALLENGE 2: GET a specific post by id
-
-//CHALLENGE 3: POST a new post
-
-//CHALLENGE 4: PATCH a post when you just want to update one parameter
-
-//CHALLENGE 5: DELETE a specific post by providing the post id.
-
+    res.json(post);
+  } else {
+    res.status(404).json({ message: "Post not found" });
+    return;
+  }
+});
+//CHALLENGE 5: DELETE a specific post by providing the post id. -> url/api/posts/delete/:id
+app.delete("/posts/:id", (req, res) => {
+  const postID = parseInt(req.params.id, 10);
+  const postIndex = posts.findIndex((p) => p.id === postID);
+  if (postIndex !== -1) {
+    posts.splice(postIndex, 1);
+    res.status(204).send(); 
+  } else {
+    res.status(404).json({ message: "Post not found" });
+  }
+});
 app.listen(port, () => {
   console.log(`API is running at http://localhost:${port}`);
 });

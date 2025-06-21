@@ -8,20 +8,98 @@ const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //1. GET a random joke
-
+app.get("/random", (req, res) => {
+  const randomIndex = Math.floor(Math.random() * jokes.length)
+  res.json(jokes[randomIndex]);
+});
 //2. GET a specific joke
-
+app.get("/jokes/:id", (req, res) => {
+  const jokeID = parseInt(req.params.id, 10);
+  const joke = jokes.find((j) => j.id === jokeID);
+  if (joke) {
+    res.json(joke);
+  } else {
+    res.status(404).json({ error: "Joke not found" });
+  }
+});
 //3. GET a jokes by filtering on the joke type
-
+app.get("/filter", (req, res) => {
+  const jokeType = req.query.type;
+  const joke = jokes.filter((j) => j.jokeType.toLowerCase() === jokeType.toLowerCase());
+  // Only return the first joke of the specified type
+  if (joke.length > 0) {
+    res.json(joke);
+  } else {
+    res.status(404).json({ error: "No jokes found for this type" });
+  }
+});
 //4. POST a new joke
-
+app.post("/jokes", (req, res) => {
+  const { text, type } = req.body;
+  if (!text || !type) {
+    return res.status(400).json({ error: "Joke text and type are required" });
+  }
+  const newJoke = {
+    id: jokes.length + 1,
+    jokeText: text,
+    jokeType: type,
+  }
+  jokes.push(newJoke);
+  res.status(201).json(newJoke);
+});
 //5. PUT a joke
-
+app.put("/jokes/:id", (req, res) => {
+  const jokeID = parseInt(req.params.id, 10);
+  const { text, type } = req.body;
+  const jokeIndex = jokes.findIndex((j) => j.id === jokeID);
+  if (jokeIndex === -1) {
+    return res.status(404).json({ error: "Joke not found" });
+  }
+  if (!text || !type) {
+    return res.status(400).json({ error: "Joke text and type are required" });
+  }
+  jokes[jokeIndex] = {
+    id: jokeID,
+    jokeText: text,
+    jokeType: type,
+  };
+  res.json(jokes[jokeIndex]);
+});
 //6. PATCH a joke
-
+app.patch("/jokes/:id", (req, res) => {
+  const jokeID = parseInt(req.params.id, 10);
+  const { text, type } = req.body;
+  const jokeIndex = jokes.findIndex((j) => j.id === jokeID);
+  if (jokeIndex === -1) {
+    return res.status(404).json({ error: "Joke not found" });
+  }
+  if (text) {
+    jokes[jokeIndex].jokeText = text;
+  }
+  if (type) {
+    jokes[jokeIndex].jokeType = type;
+  }
+  res.json(jokes[jokeIndex]);
+});
 //7. DELETE Specific joke
-
+app.delete("/jokes/:id", (req, res) => {
+  const jokeID = parseInt(req.params.id, 10);
+  const jokeIndex = jokes.findIndex((j) => j.id === jokeID);
+  if (jokeIndex === -1) {
+    return res.status(404).json({ error: "Joke not found" });
+  }
+  jokes.splice(jokeIndex, 1);
+  res.status(200).json({ message: "Joke deleted"});
+});
 //8. DELETE All jokes
+app.delete("/all", (req, res) => {
+  const masterKeyProvided = req.query.key;
+  if (masterKeyProvided !== masterKey) {
+    return res.status(404).json({ error: "Forbidden: Invalid master key" });
+  }
+  jokes = [];
+  res.status(200).json({ message: "All jokes deleted"});
+});
 
 app.listen(port, () => {
   console.log(`Successfully started server on port ${port}.`);

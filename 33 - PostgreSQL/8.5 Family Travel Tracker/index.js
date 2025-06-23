@@ -38,6 +38,7 @@ async function renderHome(res, userId) {
     countries,
     total: countries.length,
     users,
+    currentUserId: userId,
     color: "teal",
   });
 }

@@ -19,6 +19,18 @@ h1 {
   padding: 10px;
 }
 
+.title-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 400px;
+  margin: 50px auto;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+}
+
 .box {
   max-width: 400px;
   margin: 50px auto;
@@ -110,4 +122,13 @@ footer {
   flex: 0 0 auto;
   color: white;
   text-align: center;
+}
+
+.nav-btn {
+  height: 40px;
+  width: 30px;
+  border-radius: 4px;
+  border: none;
+  color: #fff;
+  font-size: 20px;
 }

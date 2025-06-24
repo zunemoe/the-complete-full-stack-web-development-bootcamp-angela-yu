@@ -85,12 +85,13 @@ router.get("/edit/:id", requireLogin, async (req, res) => {
 // Edit book details by ID
 router.post("/edit/:id", requireLogin, async (req, res) => {
     const { title, author, rating, review, date_read, isbn } = req.body;
-    const coverUrl = await fetchBookCover(isbn); // Fetch book cover image using ISBN
+    const current = await getBookDetails(req.params.id); // Fetch current book details
+    const { url: coverUrl, fetched: coverLastFetched } = await fetchBookCover(isbn, current.cover_url, current.cover_last_fetched); // Fetch book cover image using ISBN
     const userId = req.session.user.id; // Get user ID from session
     try {
         const result = await db.query(
-            "UPDATE books SET title = $1, author = $2, rating = $3, review = $4, date_read = $5, isbn = $6, cover_url = $7 WHERE id = $8 AND user_id = $9 RETURNING *",
-            [title, author, rating, review, date_read, isbn, coverUrl, req.params.id, userId]
+            "UPDATE books SET title = $1, author = $2, rating = $3, review = $4, date_read = $5, isbn = $6, cover_url = $7, cover_last_fetched = $8 WHERE id = $9 AND user_id = $10 RETURNING *",
+            [title, author, rating, review, date_read, isbn, coverUrl, coverLastFetched, req.params.id, userId]
         );
         if (result.rows.length === 0) {
             return res.status(404).send("Book not found or you do not have permission to edit this book");
@@ -130,12 +131,12 @@ router.get("/add", requireLogin, (req, res) => {
 // Add a new book to the database
 router.post("/add", requireLogin, async (req, res) => {
     const { title, author, rating, review, date_read, isbn} = req.body;
-    const coverUrl = await fetchBookCover(isbn); // Fetch book cover image using ISBN
+    const { url: coverUrl, fetched: coverLastFetched } = await fetchBookCover(isbn, null, null); // Fetch cover URL and last fetched time
     const userId = req.session.user.id; // Get user ID from session
     try {
         await db.query(
-            "INSERT INTO books (title, author, rating, review, date_read, isbn, cover_url, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
-            [title, author, rating, review, date_read, isbn, coverUrl, userId]
+            "INSERT INTO books (title, author, rating, review, date_read, isbn, cover_url, cover_last_fetched, user_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+            [title, author, rating, review, date_read, isbn, coverUrl, coverLastFetched, userId]
         );
         res.redirect('/');
     } catch (err) {
@@ -145,30 +146,37 @@ router.post("/add", requireLogin, async (req, res) => {
 });
 
 // Functions
-// Function to fetch book cover image from Open Library API
-async function fetchBookCover(isbn) {
-    if (!isbn) return null; // Return null if no ISBN is provided
-
-    try {
-        const url = `${API_URL}${isbn}-L.jpg?default=false`; // Use the Open Library API URL format
-        const response = await axios.get(url, { responseType: 'arraybuffer' });
-        if (response.status === 200) {
-            console.log("Book cover fetched successfully:", url);            
-            return url;
-        } else {
-            console.error("Failed to fetch book cover, status code:", response.status);
-            return null; // Return null if the request fails
-        }
-    } catch (err) {
-        console.error("Error fetching book cover:", err);
-        return null; // Return null if there's an error
-    }
-}
-
 // Function to fetch book details from db
 async function getBookDetails(id) {
     const result = await db.query("SELECT * FROM books WHERE id = $1", [id]);
     return result.rows[0];
+}
+
+// Function to fetch book cover image from Open Library API
+async function fetchBookCover(isbn, currentCoverURL, lastFetched) {
+    if (!isbn) return { url: null, fetched: null }; // Return null if no ISBN is provided
+
+    // If fetched within the last 24 hours, return cached URL
+    const _24_HOURS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    const now = new Date();
+    const fetchedAt = lastFetched ? new Date(lastFetched) : null;
+
+    if (currentCoverURL && fetchedAt && now - fetchedAt < _24_HOURS) {
+        return { url: currentCoverURL, fetched: fetchedAt };
+    }        
+    
+    const url = `${API_URL}${isbn}-L.jpg?default=false`; // Use the Open Library API URL format
+    try {
+        const response = await axios.get(url, { responseType: 'arraybuffer' });
+        if (response.status === 200) {
+            return { url: url, fetched: now }; // Return the new URL and current time
+        } else {
+            return { url: null, fetched: null }; // Return null if the request fails
+        }
+    } catch (err) {
+        console.error("Error fetching book cover:", err);
+        return { url: null, fetched: null }; // Return null if there's an error
+    }
 }
 
 export default router;

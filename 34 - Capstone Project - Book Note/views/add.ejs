@@ -1,0 +1,44 @@
+<%- include('partials/header', { title: 'Book Note: Add New Book' }) %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h2 class="mb-4 text-center">Add New Book</h2>
+
+            <form action="/add" method="POST">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="author" class="form-label">Author</label>
+                    <input type="text" class="form-control" id="author" name="author" required>
+                </div>
+                <div class="mb-3">
+                    <label for="isbn" class="form-label">ISBN</label>
+                    <input type="text" class="form-control" id="isbn" name="isbn" required>
+                </div>
+                <div class="mb-3">
+                    <label for="date_read" class="form-label">Date Read</label>
+                    <input type="date" class="form-control" id="date_read" name="date_read" required>
+                </div>
+                <div class="mb-3">
+                    <label for="rating" class="form-label">Rating (1-10)</label>
+                    <select name="rating" id="rating" class="form-select" required>
+                        <option value="" disabled selected>Select a rating</option>
+                        <% for (let i = 10; i >= 1; i--) { %>
+                            <option value="<%= i %>"><%= i %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="review" class="form-label">Review</label>
+                    <textarea class="form-control" id="review" name="review" rows="8" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Add Book</button>
+            </form>
+        </div>
+    </div>      
+</div>
+
+<%- include("partials/footer") %>

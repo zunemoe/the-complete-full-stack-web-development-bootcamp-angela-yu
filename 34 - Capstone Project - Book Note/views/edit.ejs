@@ -1,0 +1,40 @@
+<%- include('partials/header', { title: book.title }) %>
+
+<div class="container py-5">
+    <h2 class="mb-4">Edit Book: <%= book.title %></h2>
+
+    <form action="/edit/<%= book.id %>" method="POST">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" name="title" id="title" class="form-control" required value="<%= book.title %>">
+        </div>
+        <div class="mb-3">
+            <label for="author" class="form-label">Author</label>
+            <input type="text" name="author" id="author" class="form-control" required value="<%= book.author %>">
+        </div>
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN</label>
+            <input type="text" name="isbn" id="isbn" class="form-control" value="<%= book.isbn %>">
+        </div>
+        <div class="mb-3">
+            <label for="date_read" class="form-label">Date Read</label>
+            <input type="date" name="date_read" id="date_read" class="form-control" required value="<%= book.date_read.toISOString().split('T')[0] %>">
+        </div>
+        <div class="mb-3">
+            <label for="rating" class="form-label">Rating (1–10)</label>
+            <select name="rating" id="rating" class="form-select" required>
+                <% for (let i = 10; i >= 1; i--) { %>
+                    <option value="<%= i %>" <%= book.rating == i ? 'selected' : '' %>><%= i %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="review" class="form-label">Review</label>
+            <textarea name="review" id="review" class="form-control" rows="8" required><%= book.review %></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Save Changes</button>
+        <a href="/book/<%= book.id %>" class="btn btn-secondary ms-2">Cancel</a>
+    </form>
+</div>
+
+<%- include("partials/footer") %>

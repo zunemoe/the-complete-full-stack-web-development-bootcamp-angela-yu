@@ -6,6 +6,7 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import session from "express-session";
 import env from "dotenv";
+import GoogleStrategy from "passport-google-oauth20";
 
 const app = express();
 const port = 3000;
@@ -106,7 +107,16 @@ app.post("/register", async (req, res) => {
   }
 });
 
-passport.use(
+app.get("/auth/google", passport.authenticate("google", {
+  scope: ["profile", "email"],
+}));
+
+app.get("/auth/google/secrets", passport.authenticate("google", {
+  successRedirect: "/secrets",
+  failureRedirect: "/login",
+}));
+
+passport.use("local", 
   new Strategy(async function verify(username, password, cb) {
     try {
       const result = await db.query("SELECT * FROM users WHERE email = $1 ", [
@@ -138,6 +148,27 @@ passport.use(
     }
   })
 );
+
+passport.use("google", new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/google/secrets",
+  userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
+}, async (accessToken, refreshToken, profile, cb) => {
+  try {
+    const result = await db.query("SELECT * FROM users WHERE email = $1", [profile._json.email]);
+    if (result.rows.length > 0) {
+      // User already exists, log them in
+      return cb(null, result.rows[0]);
+    } else {
+      const newUser = await db.query("INSERT INTO users (email, password) VALUES ($1, $2) RETURNING *", [profile._json.email, "google"]);
+      return cb(null, newUser.rows[0]);
+    }
+  } catch (err) {
+    console.error("Error during Google authentication:", err);
+    return cb(err);
+  }
+}));
 
 passport.serializeUser((user, cb) => {
   cb(null, user);

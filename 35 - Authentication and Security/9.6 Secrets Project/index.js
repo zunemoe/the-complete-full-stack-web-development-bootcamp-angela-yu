@@ -4,7 +4,7 @@ import pg from "pg";
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
-import GoogleStrategy from "passport-google-oauth2";
+import GoogleStrategy from "passport-google-oauth20";
 import session from "express-session";
 import env from "dotenv";
 
@@ -36,7 +36,11 @@ const db = new pg.Client({
 db.connect();
 
 app.get("/", (req, res) => {
-  res.render("home.ejs");
+  if (req.isAuthenticated()) {
+    res.render("secrets.ejs", { secret: req.user.secret });
+  } else {
+    res.render("home.ejs");
+  }
 });
 
 app.get("/login", (req, res) => {
@@ -58,7 +62,8 @@ app.get("/logout", (req, res) => {
 
 app.get("/secrets", (req, res) => {
   if (req.isAuthenticated()) {
-    res.render("secrets.ejs");
+    const user = req.user; // Assuming req.user contains the authenticated user
+    res.render("secrets.ejs", { secret: user? user.secret : null });
 
     //TODO: Update this to pull in the user secret to render in secrets.ejs
   } else {
@@ -68,6 +73,30 @@ app.get("/secrets", (req, res) => {
 
 //TODO: Add a get route for the submit button
 //Think about how the logic should work with authentication.
+app.get("/submit", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.render("submit.ejs");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.post("/submit", async (req, res) => {
+  const secret = req.body.secret;
+  const userId = req.user.id; // Assuming req.user contains the authenticated user
+  try {
+    const result = await db.query(
+      "UPDATE users SET secret = $1 WHERE id = $2 RETURNING *",
+      [secret, userId]
+    );
+    
+    const updatedUser = result.rows[0];
+    res.render("secrets.ejs", { secret: updatedUser.secret });
+  } catch (err) {
+    console.error("Error submitting secret:", err);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 app.get(
   "/auth/google",
@@ -170,9 +199,9 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, cb) => {
       try {
-        console.log(profile);
+        // console.log(profile);
         const result = await db.query("SELECT * FROM users WHERE email = $1", [
-          profile.email,
+          profile.emails[0].value,
         ]);
         if (result.rows.length === 0) {
           const newUser = await db.query(

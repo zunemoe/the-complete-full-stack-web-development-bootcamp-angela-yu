@@ -1,7 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <div>
     <h1>My Contacts</h1>
 
@@ -28,8 +29,7 @@ ReactDOM.render(
     />
     <p>+918 372 574</p>
     <p>gmail@chucknorris.com</p>
-  </div>,
-  document.getElementById("root")
+  </div>
 );
 
 // If you're running this locally in VS Code use the commands:

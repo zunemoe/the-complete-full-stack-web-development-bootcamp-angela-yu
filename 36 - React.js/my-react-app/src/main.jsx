@@ -1,21 +1,25 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import React from 'react'
+import ReactDom  from 'react-dom/client'
 import './index.css'
 
-// Set the time manually for testing purposes
-// const time = '10:30:00 PM'; // Change this to test different times
-const time = new Date().toLocaleTimeString();
-const style = {
-  color: time.includes('AM') ? 'blue' : 'red',
+function Card(props) {
+  return (
+    <div className="card">
+      <img src={props.img} />
+      <h2>{props.name}</h2>
+      <p>{props.phone}</p>
+      <p>{props.email}</p>
+    </div>
+  );
 }
-let greeting = time.includes('AM') ? 'Good Morning!' : 'Good Evening!';
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <div>
-      <h1 className="heading" style={style}> {greeting} </h1>    
-    </div>    
-  </StrictMode>,
+ReactDom.createRoot(document.getElementById('root')).render(
+  <div>
+    <h1>My Contacts</h1>
+    <Card img ="https://i.pravatar.cc/200?u=1" name="John Doe" phone="+123456789" email="john.doe@example.com" />
+    <Card img ="https://i.pravatar.cc/200?u=2" name="Jane Smith" phone="+987654321" email="jane.smith@example.com" />
+    <Card img ="https://i.pravatar.cc/200?u=3" name="Alice Johnson" phone="+1122334455" email="alice.johnson@example.com" />
+  </div>
 );
 
 

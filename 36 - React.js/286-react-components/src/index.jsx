@@ -1,16 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
   <div>
-    <h1>My Favourite Foods</h1>
-    <ul>
-      <li>Bacon</li>
-      <li>Jamon</li>
-      <li>Noodles</li>
-    </ul>
-  </div>,
-  document.getElementById("root")
+    <App />
+  </div>
 );
 
 // If you're running this locally in VS Code use the commands:

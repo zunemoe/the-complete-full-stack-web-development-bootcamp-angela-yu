@@ -1,17 +1,21 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
+
+// Set the time manually for testing purposes
+// const time = '10:30:00 PM'; // Change this to test different times
+const time = new Date().toLocaleTimeString();
+const style = {
+  color: time.includes('AM') ? 'blue' : 'red',
+}
+let greeting = time.includes('AM') ? 'Good Morning!' : 'Good Evening!';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <div>
+      <h1 className="heading" style={style}> {greeting} </h1>    
+    </div>    
   </StrictMode>,
 );
 
-createRoot(document.getElementById('root')).render(
-  <div>
-    <h1>Hello World!</h1>
-    <p>This is my first React app.</p>
-  </div>
-);
+

@@ -12,3 +12,13 @@
 // to install the node modules and
 // npm run dev
 // to launch your react project in your browser
+
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+
+createRoot(document.getElementById("root")).render(
+    <div>
+        <p>Created by Zune.</p>
+        <p>Copyright {new Date().getFullYear()}.</p>
+    </div>
+);

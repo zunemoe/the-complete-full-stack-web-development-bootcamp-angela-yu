@@ -1,21 +1,42 @@
 import React, {useState} from "react";
 
-
 function App() {
-  const [name, setName] = useState("Zune");
+  const [fname, setfName] = useState("");
+  const [lname, setlName] = useState("");
+  const [inputName, setInputName] = useState("");
 
-  function updateName(event) {
-    setName(event.target.value);
+  function handleInputChange(event) {
+    setInputName(event.target.value);
+
+    event.preventDefault();
+  }
+
+  function updateName() {
+    setName(inputName);
+  }
+
+  function updatefName(event) {
+    setfName(event.target.value);    
+  }
+
+  function updatelName(event) {
+    setlName(event.target.value);
   }
 
   return (
     <div className="container">
-      <h1>Hello {name}! </h1>
+      <h1>Hello {fname} {lname}! </h1>
       <input 
         type="text" 
-        placeholder="What's your name?" 
-        onChange={}
-        value={name}      
+        placeholder="First Name"         
+        value={fname}     
+        onChange={updatefName}
+        />
+        <input 
+        type="text" 
+        placeholder="Last Name"         
+        value={lname}     
+        onChange={updatelName}
         />
       <button onClick={updateName}>Submit</button>
     </div>

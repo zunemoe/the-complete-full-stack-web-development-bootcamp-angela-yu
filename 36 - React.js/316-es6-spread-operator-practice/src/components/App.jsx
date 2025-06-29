@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
+import TodoItem from "./TodoItem";
 
 function App() {
   const [items, setItems] = useState([]);
@@ -8,7 +9,7 @@ function App() {
   useEffect(() => {
     console.log("Items updated:", items);
   }, [items]);
-  
+
   function handleInputChange(event) {
     const { value } = event.target;
     setInputText(value);
@@ -47,8 +48,8 @@ function App() {
       </div>
       <div>
         <ul>
-          {items.map((item, index) => {
-            return <li key={index}>{item}</li>;
+          {items.map((item, index) => {            
+            return <TodoItem key={index} item={item} />;
           })}
         </ul>
       </div>

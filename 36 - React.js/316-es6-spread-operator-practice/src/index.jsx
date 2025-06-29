@@ -1,8 +1,9 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import App from "./components/App";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
 
 //CHALLENGE: Make this app work by applying what you've learnt.
 //1. When new text is written into the input, its state should be saved.

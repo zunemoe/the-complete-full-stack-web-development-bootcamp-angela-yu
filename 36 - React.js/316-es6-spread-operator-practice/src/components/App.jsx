@@ -49,7 +49,7 @@ function App() {
       <div>
         <ul>
           {items.map((item, index) => {            
-            return <TodoItem key={index} item={item} />;
+            return <TodoItem key={index} id={index} item={item} />;
           })}
         </ul>
       </div>

@@ -1,8 +1,14 @@
 import React from "react";
 
+function toggleStrike(event) {
+    event.target.classList.toggle("strike");
+}
+
 function TodoItem(props) {
     return (
-        <li>{props.item}</li>
+        <div>
+            <li onClick={toggleStrike}>{props.item}</li>
+        </div>        
     );
 }
 

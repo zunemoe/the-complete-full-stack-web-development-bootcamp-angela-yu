@@ -77,3 +77,8 @@ li {
   position: relative;
   padding: 0.5rem;
 }
+
+.strike {
+  text-decoration: line-through;
+  color: #636e72;
+}

@@ -9,7 +9,6 @@ function App() {
     setItems(prevItems => {
       return [...prevItems, inputText];
     });
-    setInputText("");
   }
 
   function deleteItem(id) {
@@ -27,9 +26,6 @@ function App() {
       </div>
       <InputArea 
         onAdd={addItem}
-        onChange={handleChange}
-        addItem={addItem}
-        value={inputText}
       />
       <div>
         <ul>

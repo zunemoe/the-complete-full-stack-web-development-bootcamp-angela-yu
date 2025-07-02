@@ -17,6 +17,7 @@ function InputArea(props) {
       <button 
         onClick={() => {
           props.onAdd(inputText);
+          setInputText(""); // Clear the input field after adding
         }}>
         <span>Add</span>
       </button>
